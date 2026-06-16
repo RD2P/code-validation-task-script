@@ -33,7 +33,7 @@ git diff
 
 To see the changes for a specific file:
 ```bash
-git diff output/S50001.java
+git diff output/S1.java
 ```
 
 ### Cleaning output/ directory
