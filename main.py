@@ -1,13 +1,9 @@
 import json
 import os
+import sys
 
 
-# 1. First run with MODE = "buggy_code" to create files with buggy code.
-# 2. Stage output
-# 3. Set to MODE = "fixed_code" to create files with fixed code.
-MODE = "buggy_code" 
-
-def parse_and_create_files():
+def parse_and_create_files(mode):
     """
     Parses data.json and creates a .java file for each entry.
     """
@@ -21,13 +17,13 @@ def parse_and_create_files():
     with open(json_file_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
 
-    start_id = 50001
+    start_id = 1
     for i, item in enumerate(data):
         file_id = start_id + i
-        file_name = f"{file_id}.java"
+        file_name = f"S{file_id}.java"
         
-        if MODE in item:
-            code_content = item[MODE]
+        if mode in item:
+            code_content = item[mode]
             
             try:
                 with open("output/" + file_name, 'w', encoding='utf-8') as java_file:
@@ -37,4 +33,15 @@ def parse_and_create_files():
                 print(f"Error writing to file {file_name}: {e}")
 
 if __name__ == '__main__':
-    parse_and_create_files()
+    if len(sys.argv) != 2:
+        print("Usage: python3 main.py <mode>")
+        print("Where <mode> is either 'buggy_code' or 'fixed_code'")
+        print("Example: python3 main.py buggy_code")
+        sys.exit(1)
+    
+    mode = sys.argv[1]
+    if mode not in ["buggy_code", "fixed_code"]:
+        print(f"Error: Invalid mode '{mode}'. Please use 'buggy_code' or 'fixed_code'.")
+        sys.exit(1)
+
+    parse_and_create_files(mode)
