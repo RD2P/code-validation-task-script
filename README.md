@@ -3,13 +3,16 @@
 This project includes an automation script to streamline the process of generating and comparing "buggy" and "fixed" versions of the code snippets.
 
 ### Automated Workflow
+1. Download `label_app.html`
 
-1.  **Ensure the script executable:**
+2. Copy the values from the line starting with `const PAIRS = ` to `data/data.json`
+
+3.  **Ensure the script executable:**
     ```bash
     chmod +x run_all.sh
     ```
 
-2.  **Run the automation script:**
+4.  **Run the automation script:**
     Execute the script from the root of the project directory.
     ```bash
     ./run_all.sh
@@ -38,18 +41,30 @@ git diff output/S1.java
 
 ### Cleaning output/ directory
 
-To clean the output, run the clean.sh script:
+To clean the output, run the `clean.sh` script:
 ```bash
 ./clean.sh
 ```
 
 ## Manual steps:
 
-1. Download `label_app.html`
-2. Copy the values from the line starting with `const PAIRS = ` to `data/data.json`
-3. Run the script with `python main.py`
-    NOTE: The `buggy_code` value from each element in `data.json` will be written to `output/<id>.java`
-4. Stage the files in output/
-5. Update the `MODE` in the script to `fixed_code` and run the script again
+1. Run the script with 
+    
+    ```bash
+    python main.py buggy_code
+    ```
+
+    **NOTE**: The `buggy_code` value from each element in `data.json` will be written to `output/<id>.java`
+
+2. Stage the files in output/
+
+    ```bash
+    git add output/
+    ```
+
+3. Run the script again with 
+    ```bash
+    python main.py fixed_code`
+    ```
 
 You should now be able to see the diff in each java file.
