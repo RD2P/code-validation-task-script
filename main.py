@@ -1,6 +1,12 @@
 import json
 import os
 
+
+# 1. First run with MODE = "buggy_code" to create files with buggy code.
+# 2. Stage output
+# 3. Set to MODE = "fixed_code" to create files with fixed code.
+MODE = "buggy_code" 
+
 def parse_and_create_files():
     """
     Parses data.json and creates a .java file for each entry.
@@ -20,8 +26,8 @@ def parse_and_create_files():
         file_id = start_id + i
         file_name = f"{file_id}.java"
         
-        if 'buggy_code' in item:
-            code_content = item['buggy_code']
+        if MODE in item:
+            code_content = item[MODE]
             
             try:
                 with open("output/" + file_name, 'w', encoding='utf-8') as java_file:
@@ -29,8 +35,6 @@ def parse_and_create_files():
                 print(f"Created {file_name}")
             except IOError as e:
                 print(f"Error writing to file {file_name}: {e}")
-        else:
-            print(f"Skipping item {i} as 'buggy_code' key is missing.")
 
 if __name__ == '__main__':
     parse_and_create_files()
